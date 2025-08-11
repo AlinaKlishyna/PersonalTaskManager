@@ -11,8 +11,6 @@ public interface DAO<T> {
     String read(String path);
     void update(T t);
     void delete(T t);
-    void display(T t);
-    void displayAll();
     T get(T t);
     List<T> getAll();
 }

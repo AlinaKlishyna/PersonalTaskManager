@@ -36,16 +36,6 @@ public class PersonDAOFile implements PersonDAO{
     }
 
     @Override
-    public void display(Person person) {
-
-    }
-
-    @Override
-    public void displayAll() {
-
-    }
-
-    @Override
     public Person get(Person person) {
         return null;
     }

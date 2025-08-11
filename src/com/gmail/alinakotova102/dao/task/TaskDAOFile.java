@@ -37,16 +37,6 @@ public class TaskDAOFile implements TaskDAO{
     }
 
     @Override
-    public void display(Task task) {
-
-    }
-
-    @Override
-    public void displayAll() {
-
-    }
-
-    @Override
     public Task get(Task task) {
         return null;
     }
