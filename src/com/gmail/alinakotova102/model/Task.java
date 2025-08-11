@@ -11,12 +11,15 @@ public class Task {
     private Priority priority;
     private LocalDate creationDate;
     private LocalDate executionDate;
-    private String author;
-    private String performer;
+    private Person author;
+    private Person performer;
     private Status status;
 
-    public Task(String title, String description, Priority priority, LocalDate executionDate, String author,
-                String performer) {
+    public Task() {
+    }
+
+    public Task(String title, String description, Priority priority, LocalDate executionDate, Person author,
+                Person performer) {
         this.ID = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
@@ -28,8 +31,8 @@ public class Task {
         this.status = Status.START;
     }
 
-    public Task(String title, Priority priority, LocalDate executionDate, String author,
-                String performer) {
+    public Task(String title, Priority priority, LocalDate executionDate, Person author,
+                Person performer) {
         this.ID = UUID.randomUUID().toString();
         this.title = title;
         this.priority = priority;
@@ -84,19 +87,19 @@ public class Task {
         this.executionDate = executionDate;
     }
 
-    public String getAuthor() {
+    public Person getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Person author) {
         this.author = author;
     }
 
-    public String getPerformer() {
+    public Person getPerformer() {
         return performer;
     }
 
-    public void setPerformer(String performer) {
+    public void setPerformer(Person performer) {
         this.performer = performer;
     }
 

@@ -12,6 +12,9 @@ public class Person {
     private String email;
     private final List<Task> tasks = new ArrayList<>();
 
+    public Person() {
+        this.ID = UUID.randomUUID().toString();
+    }
 
     public Person(String firstName, String lastName, String email) {
         this.ID = UUID.randomUUID().toString();
