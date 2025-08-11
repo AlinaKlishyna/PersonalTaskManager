@@ -4,13 +4,19 @@ import java.util.List;
 
 /**
  * Общие методы, которые могут встретиться при работе с данными
+ *
  * @param <T>
  */
 public interface DAO<T> {
-    void insert(T t);
-    String read(String path);
-    void update(T t);
-    void delete(T t);
-    T get(T t);
-    List<T> getAll();
+    public void insert(T t);
+
+    public String read(String path);
+
+    public void update(T t);
+
+    public void delete(T t);
+
+    public T get(T t);
+
+    public List<T> getAll();
 }

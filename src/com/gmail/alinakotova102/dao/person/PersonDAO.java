@@ -9,8 +9,11 @@ import java.util.List;
  * Конкретные методы, которые могут встретиться при работе с Person
  */
 public interface PersonDAO extends DAO<Person> {
-    List<Person> findByID();
-    List<Person> findByName();
-    List<Person> findByLastName();
-    List<Person> findByEmail();
+    public List<Person> findByID();
+
+    public List<Person> findByName();
+
+    public List<Person> findByLastName();
+
+    public List<Person> findByEmail();
 }

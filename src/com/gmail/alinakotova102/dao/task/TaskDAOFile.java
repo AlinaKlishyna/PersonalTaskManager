@@ -4,10 +4,11 @@ import com.gmail.alinakotova102.model.Task;
 
 import java.util.List;
 
-public class TaskDAOFile implements TaskDAO{
+public class TaskDAOFile implements TaskDAO {
     private static TaskDAOFile uniqueInstance;
 
-    private TaskDAOFile() {}
+    private TaskDAOFile() {
+    }
 
     public static TaskDAOFile getInstance() {
         if (uniqueInstance == null) {
@@ -18,7 +19,7 @@ public class TaskDAOFile implements TaskDAO{
 
     @Override
     public void insert(Task task) {
-        
+
     }
 
     @Override
