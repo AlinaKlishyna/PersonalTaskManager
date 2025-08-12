@@ -1,11 +1,13 @@
 package com.gmail.alinakotova102.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Person {
+public class Person implements Serializable {
+    public static final long serialVersionUUID = 1L;
     private final String ID;
     private String firstName;
     private String lastName;
