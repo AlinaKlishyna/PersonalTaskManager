@@ -23,7 +23,7 @@ public class PersonDAOFile implements PersonDAO {
     }
 
     @Override
-    public String read(String path) {
+    public String read(Person person) {
         return null;
     }
 
