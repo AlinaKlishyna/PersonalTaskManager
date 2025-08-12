@@ -1,12 +1,9 @@
 package com.gmail.alinakotova102;
 
-import com.gmail.alinakotova102.dao.task.TaskDAOFile;
 import com.gmail.alinakotova102.model.Person;
 import com.gmail.alinakotova102.model.Priority;
 import com.gmail.alinakotova102.model.Status;
 import com.gmail.alinakotova102.model.Task;
-import com.gmail.alinakotova102.util.DisplayUtil;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +38,5 @@ public class Runner {
                 LocalDate.of(2026, 1, 1),
                 new Person("Владислав", "Лисяк", "doublefmove@gmail.com"),
                 new Person("Алина", "Клишина", "alinakotova102@gmail.com")));
-
-        TaskDAOFile taskDAOFile = TaskDAOFile.getInstance();
-        DisplayUtil.console(taskDAOFile.getAll().toString());
     }
 }
