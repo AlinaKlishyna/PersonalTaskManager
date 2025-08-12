@@ -1,10 +1,12 @@
 package com.gmail.alinakotova102.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Task {
+public class Task implements Serializable {
+    public static final long serialVersionUUID = 1L;
     private final String ID;
     private String title;
     private String description;
@@ -16,27 +18,29 @@ public class Task {
     private Status status;
 
     public Task() {
+        ID = UUID.randomUUID().toString();
     }
 
-    public Task(String title, String description, Priority priority, LocalDate executionDate, Person author,
-                Person performer) {
+    public Task(String title, String description, Priority priority, LocalDate creationDate, LocalDate executionDate,
+                Person author, Person performer, Status status) {
         this.ID = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
         this.priority = priority;
-        this.creationDate = LocalDate.now();
+        this.creationDate = creationDate;
         this.executionDate = executionDate;
         this.author = author;
         this.performer = performer;
-        this.status = Status.START;
+        this.status = status;
     }
 
-    public Task(String title, Priority priority, LocalDate executionDate, Person author,
-                Person performer) {
+    public Task(String title, String description, Priority priority, LocalDate creationDate, LocalDate executionDate,
+                Person author, Person performer) {
         this.ID = UUID.randomUUID().toString();
         this.title = title;
+        this.description = description;
         this.priority = priority;
-        this.creationDate = LocalDate.now();
+        this.creationDate = creationDate;
         this.executionDate = executionDate;
         this.author = author;
         this.performer = performer;
