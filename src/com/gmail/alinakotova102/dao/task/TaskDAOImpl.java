@@ -6,20 +6,20 @@ import com.gmail.alinakotova102.model.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskDAOFile implements TaskDAO {
-    private static TaskDAOFile uniqueInstance;
+public class TaskDAOImpl implements TaskDAO {
+    private static TaskDAOImpl uniqueInstance;
     private List<Task> tasks = new ArrayList<>();
 
-    private TaskDAOFile() {
+    private TaskDAOImpl() {
     }
 
-    private TaskDAOFile(List<Task> tasks) {
+    private TaskDAOImpl(List<Task> tasks) {
         this.tasks = tasks;
     }
 
-    public static TaskDAOFile getInstance() {
+    public static TaskDAOImpl getInstance() {
         if (uniqueInstance == null) {
-            uniqueInstance = new TaskDAOFile();
+            uniqueInstance = new TaskDAOImpl();
         }
         return uniqueInstance;
     }

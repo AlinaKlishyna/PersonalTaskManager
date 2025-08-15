@@ -4,15 +4,15 @@ import com.gmail.alinakotova102.model.Person;
 
 import java.util.List;
 
-public class PersonDAOFile implements PersonDAO {
-    private static PersonDAOFile uniqueInstance;
+public class PersonDAOImpl implements PersonDAO {
+    private static PersonDAOImpl uniqueInstance;
 
-    private PersonDAOFile() {
+    private PersonDAOImpl() {
     }
 
-    public static PersonDAOFile getInstance() {
+    public static PersonDAOImpl getInstance() {
         if (uniqueInstance == null) {
-            uniqueInstance = new PersonDAOFile();
+            uniqueInstance = new PersonDAOImpl();
         }
         return uniqueInstance;
     }
