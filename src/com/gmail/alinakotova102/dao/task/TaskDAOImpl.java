@@ -5,6 +5,7 @@ import com.gmail.alinakotova102.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TaskDAOImpl implements TaskDAO {
     private static TaskDAOImpl uniqueInstance;
@@ -26,17 +27,23 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public void insert(Task task) {
-        tasks.add(task);
+        if (task != null) tasks.add(task);
     }
 
     @Override
     public String read(Task task) {
-        return (task != null) ? task.toString() : null;
+        return tasks.stream()
+                .filter(obj -> obj.equals(task))
+                .toString();
     }
 
     @Override
-    public void update(Task task) {
-        // что сюда пишем?
+    public void update(Task taskOld, Task taskNew) {
+        tasks = tasks.stream()
+                .map(obj -> {
+                    if (obj.equals(taskOld)) obj = taskNew;
+                    return obj;
+                }).toList();
     }
 
     @Override
@@ -57,47 +64,14 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public Task get(Task task) {
-        Task taskSearch = new Task();
-        for (Task item : tasks) {
-            if (item.equals(task)) {
-                taskSearch = item;
-            }
-        }
-        return taskSearch;
+        return tasks.stream()
+                .filter(obj -> obj.equals(task))
+                .findAny()
+                .get();
     }
 
     @Override
     public List<Task> getAll() {
         return tasks;
-    }
-
-    @Override
-    public void displaySortName(List<Task> task) {
-
-    }
-
-    @Override
-    public void displaySortLastName(List<Task> task) {
-
-    }
-
-    @Override
-    public void displaySortCreationDate(List<Task> task) {
-
-    }
-
-    @Override
-    public void displaySortExecutionDate(List<Task> task) {
-
-    }
-
-    @Override
-    public void editTask(Task task) {
-
-    }
-
-    @Override
-    public void completeMark(Task task) {
-
     }
 }
