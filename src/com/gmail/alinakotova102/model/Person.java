@@ -13,6 +13,8 @@ public class Person implements Serializable {
     private String lastName;
     private String email;
     private final List<Task> tasks = new ArrayList<>();
+    private static int countPersons = 1;
+    private int countOrder = 0; // добавила для удобства проверки методов
 
     public Person() {
         this.ID = UUID.randomUUID().toString();
@@ -23,6 +25,7 @@ public class Person implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        countOrder = countPersons++;
     }
 
     public String getID() {
@@ -65,8 +68,7 @@ public class Person implements Serializable {
         return Objects.equals(ID, person.ID)
                 && Objects.equals(firstName, person.firstName)
                 && Objects.equals(lastName, person.lastName)
-                && Objects.equals(email, person.email)
-                && Objects.equals(tasks, person.tasks);
+                && Objects.equals(email, person.email);
     }
 
     @Override
@@ -76,18 +78,17 @@ public class Person implements Serializable {
                 ID,
                 firstName,
                 lastName,
-                email,
-                tasks);
+                email
+        );
     }
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "\nPerson №" + countOrder + "{" +
                 "ID='" + ID + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", tasks=" + tasks +
                 '}';
     }
 }
