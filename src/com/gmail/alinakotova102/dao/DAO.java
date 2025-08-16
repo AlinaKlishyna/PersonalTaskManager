@@ -14,7 +14,7 @@ public interface DAO<T> {
 
     public String read(T t);
 
-    public void update(T t);
+    public void update(T tOld, T tNew);
 
     public void delete(T t) throws NotFoundException;
 
