@@ -6,20 +6,19 @@ import com.gmail.alinakotova102.model.Person;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PersonDAOImpl implements PersonDAO {
-    private static PersonDAOImpl uniqueInstance;
+    private static PersonDAOImpl instance;
     private List<Person> persons = new ArrayList<>();
 
     private PersonDAOImpl() {
     }
 
     public static PersonDAOImpl getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new PersonDAOImpl();
+        if (instance == null) {
+            instance = new PersonDAOImpl();
         }
-        return uniqueInstance;
+        return instance;
     }
 
     @Override
