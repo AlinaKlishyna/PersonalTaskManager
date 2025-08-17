@@ -1,16 +1,12 @@
 package com.gmail.alinakotova102;
 
+import com.gmail.alinakotova102.dao.person.PersonDAOImpl;
+import com.gmail.alinakotova102.exception.NotFoundException;
 import com.gmail.alinakotova102.model.Person;
-import com.gmail.alinakotova102.model.Priority;
-import com.gmail.alinakotova102.model.Status;
-import com.gmail.alinakotova102.model.Task;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Runner {
-    public static void main(String[] args) {
-        List<Task> tasks = new ArrayList<>();
+    public static void main(String[] args) throws NotFoundException {
+        /*List<Task> tasks = new ArrayList<>();
         tasks.add(new Task(
                 "Запомнить паттерн DAO",
                 "почитать в гугл",
@@ -38,5 +34,24 @@ public class Runner {
                 LocalDate.of(2026, 1, 1),
                 new Person("Владислав", "Лисяк", "doublefmove@gmail.com"),
                 new Person("Алина", "Клишина", "alinakotova102@gmail.com")));
+*/
+        Person p1 =  new Person("Владислав", "Лисяк", "doublefmove@gmail.com");
+        Person p2 =  new Person("Алина", "Клишина", "alinakotova102@gmail.com");
+        Person p3 =  new Person("Василиса", "Бермудов", "vasilisa200@gmail.com");
+        Person p4 = new Person("Василий", "Славко", "vas2020@gmail.com");
+        Person p5 = new Person("Женя", "Одесев", "jenyaodesev@mail.ru");
+        PersonDAOImpl personDAO = PersonDAOImpl.getInstance();
+        personDAO.insert(p1);
+        personDAO.insert(p2);
+        personDAO.insert(p3);
+        personDAO.insert(p4);
+        personDAO.insert(p5);
+
+        System.out.println(personDAO.getAll());
+        personDAO.update(p1, p2);
+        System.out.println(personDAO.getAll());
+
+        TaskService task = TaskService.getInstance();
+
     }
 }
