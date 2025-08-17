@@ -1,11 +1,10 @@
 package com.gmail.alinakotova102.dao.person;
 
-import com.gmail.alinakotova102.exception.NotFoundException;
 import com.gmail.alinakotova102.model.Person;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class PersonDAOImpl implements PersonDAO {
     private static PersonDAOImpl instance;
@@ -23,7 +22,7 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Override
     public void insert(Person person) {
-        if (person != null) persons.add(person);
+        persons.add(person);
     }
 
     @Override
@@ -36,25 +35,19 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Override
     public void update(Person personOld, Person personNew) {
-        persons = persons.stream()
-                .map(person -> {
-                    if (person.equals(personOld)) person = personNew;
-                    return person;
-                })
-                .toList();
+        persons.set(persons.indexOf(personOld), personNew);
     }
 
     @Override
-    public void delete(Person person) throws NotFoundException {
-        if (person != null) persons.remove(person);
+    public void delete(Person person) {
+        persons.remove(person);
     }
 
     @Override
-    public Person get(Person person) {
+    public Optional<Person> get(Person person) {
         return persons.stream()
                 .filter(obj -> obj.equals(person))
-                .findFirst()
-                .get();
+                .findFirst();
     }
 
     @Override

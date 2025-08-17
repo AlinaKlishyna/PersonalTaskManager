@@ -1,8 +1,7 @@
 package com.gmail.alinakotova102.dao;
 
-import com.gmail.alinakotova102.exception.NotFoundException;
-
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Общие методы, которые могут встретиться при работе с данными
@@ -16,9 +15,9 @@ public interface DAO<T> {
 
     public void update(T tOld, T tNew);
 
-    public void delete(T t) throws NotFoundException;
+    public void delete(T t);
 
-    public T get(T t);
+    public Optional<T> get(T t);
 
     public List<T> getAll();
 }
