@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class Task implements Serializable {
     public static final long serialVersionUUID = 1L;
-    private final String ID;
+    private final UUID id = UUID.randomUUID();
     private String title;
     private String description;
     private Priority priority;
@@ -18,12 +18,10 @@ public class Task implements Serializable {
     private Status status;
 
     public Task() {
-        ID = UUID.randomUUID().toString();
     }
 
     public Task(String title, String description, Priority priority, LocalDate creationDate, LocalDate executionDate,
                 Person author, Person performer, Status status) {
-        this.ID = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
         this.priority = priority;
@@ -34,21 +32,8 @@ public class Task implements Serializable {
         this.status = status;
     }
 
-    public Task(String title, String description, Priority priority, LocalDate creationDate, LocalDate executionDate,
-                Person author, Person performer) {
-        this.ID = UUID.randomUUID().toString();
-        this.title = title;
-        this.description = description;
-        this.priority = priority;
-        this.creationDate = creationDate;
-        this.executionDate = executionDate;
-        this.author = author;
-        this.performer = performer;
-        this.status = Status.START;
-    }
-
-    public String getID() {
-        return ID;
+    public UUID getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -119,29 +104,21 @@ public class Task implements Serializable {
     public boolean equals(Object obj) {
         if (obj == null || obj != this.getClass()) return false;
         Task other = (Task) obj;
-        return other.getID().equals(this.ID)
-                && (other.getTitle().equals(this.title)
-                && (other.getDescription().equals(this.description))
-                && (other.getPriority() == this.priority)
-                && (other.getCreationDate() == this.creationDate)
-                && (other.getExecutionDate() == this.executionDate)
-                && (other.getAuthor().equals(this.author))
-                && (other.getPerformer().equals(this.performer))
-                && (other.getStatus() == this.status)
-        );
+        return other.getId().equals(this.id)
+                && (other.getAuthor().equals(this.author));
     }
 
     @Override
     public int hashCode() {
         int prime = 31;
-        return prime * Objects.hash(ID, title, description, priority, creationDate, executionDate, priority,
+        return prime * Objects.hash(id, title, description, priority, creationDate, executionDate, priority,
                 status, performer, author);
     }
 
     @Override
     public String toString() {
         return "model.Task{" +
-                "ID='" + ID + '\'' +
+                "ID='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", priority=" + priority +

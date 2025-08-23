@@ -5,8 +5,8 @@ import com.gmail.alinakotova102.model.Task;
 
 import java.io.*;
 
-public class PersonSerializer implements Serializer<Person> {
-    @Override
+public class PersonSerializer{
+
     public void serialize(Person person, String path) {
         try (ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream(path))) {
             obj.writeObject(person);
@@ -15,7 +15,6 @@ public class PersonSerializer implements Serializer<Person> {
         }
     }
 
-    @Override
     public Person deserialize(String path) {
         Person person = new Person();
         try (ObjectInputStream obj = new ObjectInputStream(new FileInputStream(path))) {

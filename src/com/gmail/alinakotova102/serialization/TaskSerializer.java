@@ -8,8 +8,8 @@ import java.io.*;
  * Serializable - маркерный интерфейс
  * это интерфейс, который не содержит методов, но при этом помечает этот класс
  */
-public class TaskSerializer implements Serializer<Task> {
-    @Override
+public class TaskSerializer {
+
     public void serialize(Task task, String path) {
         try (ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream(path))) {
             obj.writeObject(task);
@@ -18,7 +18,6 @@ public class TaskSerializer implements Serializer<Task> {
         }
     }
 
-    @Override
     public Task deserialize(String path) {
         Task task = new Task();
         try (ObjectInputStream obj = new ObjectInputStream(new FileInputStream(path))) {

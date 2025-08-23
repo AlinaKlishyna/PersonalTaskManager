@@ -1,9 +1,11 @@
-package com.gmail.alinakotova102.dao.task;
+package com.gmail.alinakotova102.api.dao.impl;
 
+import com.gmail.alinakotova102.api.dao.TaskDAO;
 import com.gmail.alinakotova102.model.Task;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Классы которые имплементируют ДАО должны быть сырыми и без какой-либо
@@ -11,21 +13,17 @@ import java.util.Optional;
  * Вся проверка происходит в классах сервисах
  */
 public class TaskDAOImpl implements TaskDAO {
-    private static TaskDAOImpl uniqueInstance;
+    private static TaskDAOImpl instance;
     private List<Task> tasks = new ArrayList<>();
 
     private TaskDAOImpl() {
     }
 
-    private TaskDAOImpl(List<Task> tasks) {
-        this.tasks = tasks;
-    }
-
     public static TaskDAOImpl getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new TaskDAOImpl();
+        if (instance == null) {
+            instance = new TaskDAOImpl();
         }
-        return uniqueInstance;
+        return instance;
     }
 
     @Override
@@ -34,20 +32,27 @@ public class TaskDAOImpl implements TaskDAO {
     }
 
     @Override
-    public String read(Task task) {
+    public Task read(UUID id) {
         return tasks.stream()
-                .filter(obj -> obj.equals(task))
-                .toString();
+                .filter(obj -> obj.getId().equals(id))
+                .findFirst()
+                .get();
     }
 
     @Override
-    public void update(Task taskOld, Task taskNew) {
-        tasks.set(tasks.indexOf(taskOld), taskNew);
+    public void update(Task task) {
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getId().equals(task.getId())) {
+                tasks.set(i, task);
+                return;
+            }
+        }
     }
 
     @Override
     public void delete(Task task) {
-        tasks.remove(task);
+        if (tasks.contains(task))
+            tasks.remove(task);
     }
 
     /**

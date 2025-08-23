@@ -1,10 +1,9 @@
-package com.gmail.alinakotova102.dao.person;
+package com.gmail.alinakotova102.api.dao.impl;
 
+import com.gmail.alinakotova102.api.dao.PersonDAO;
 import com.gmail.alinakotova102.model.Person;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 public class PersonDAOImpl implements PersonDAO {
     private static PersonDAOImpl instance;
@@ -26,21 +25,27 @@ public class PersonDAOImpl implements PersonDAO {
     }
 
     @Override
-    public String read(Person person) {
+    public Person read(UUID id) {
         return persons.stream()
-                .filter(obj -> obj.equals(person))
+                .filter(obj -> obj.getId().equals(id))
                 .findFirst()
-                .toString();
+                .get();
     }
 
     @Override
-    public void update(Person personOld, Person personNew) {
-        persons.set(persons.indexOf(personOld), personNew);
+    public void update(Person person) {
+        for (int i = 0; i < persons.size(); i++) {
+            if (persons.get(i).equals(person.getId())) {
+                persons.set(i, person);
+                return;
+            }
+        }
     }
 
     @Override
     public void delete(Person person) {
-        persons.remove(person);
+        if (persons.contains(person))
+            persons.remove(person);
     }
 
     @Override

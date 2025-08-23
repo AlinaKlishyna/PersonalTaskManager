@@ -8,28 +8,23 @@ import java.util.UUID;
 
 public class Person implements Serializable {
     public static final long serialVersionUUID = 1L;
-    private final String ID;
+    private final UUID id = UUID.randomUUID();
     private String firstName;
     private String lastName;
     private String email;
     private final List<Task> tasks = new ArrayList<>();
-    private static int countPersons = 1;
-    private int countOrder = 0; // добавила для удобства проверки методов
 
     public Person() {
-        this.ID = UUID.randomUUID().toString();
     }
 
     public Person(String firstName, String lastName, String email) {
-        this.ID = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        countOrder = countPersons++;
     }
 
-    public String getID() {
-        return ID;
+    public UUID getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -65,7 +60,7 @@ public class Person implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return Objects.equals(ID, person.ID)
+        return Objects.equals(id, person.id)
                 && Objects.equals(firstName, person.firstName)
                 && Objects.equals(lastName, person.lastName)
                 && Objects.equals(email, person.email);
@@ -75,7 +70,7 @@ public class Person implements Serializable {
     public int hashCode() {
         int prime = 31;
         return prime * Objects.hash(
-                ID,
+                id,
                 firstName,
                 lastName,
                 email
@@ -84,8 +79,8 @@ public class Person implements Serializable {
 
     @Override
     public String toString() {
-        return "\nPerson №" + countOrder + "{" +
-                "ID='" + ID + '\'' +
+        return "\nPerson {" +
+                "ID='" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

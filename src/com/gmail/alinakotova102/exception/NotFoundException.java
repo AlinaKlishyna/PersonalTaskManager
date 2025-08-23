@@ -7,7 +7,7 @@ public class NotFoundException extends Exception {
     }
 
     public NotFoundException(Object o) {
-        DisplayUtil.view("I couldn't find the object : " + o + ";");
+        DisplayUtil.view("Object not found: " + o + ";");
     }
 
     @Override
