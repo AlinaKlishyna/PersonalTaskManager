@@ -1,32 +1,36 @@
 package com.gmail.alinakotova102.serialization;
 
 import com.gmail.alinakotova102.model.Person;
-import com.gmail.alinakotova102.model.Task;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PersonSerializer{
-
-    public void serialize(Person person, String path) {
+public class PersonSerializer {
+    public static void serialize(ArrayList<Person> persons, String path) {
         try (ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream(path))) {
-            obj.writeObject(person);
+            obj.writeObject(persons);
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + e.getMessage() + " non found!");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error while reading file: " + path);
         }
     }
 
-    public Person deserialize(String path) {
-        Person person = new Person();
+    public static ArrayList<Person> deserialize(String path) {
+        ArrayList<Person> persons = new ArrayList<>();
         try (ObjectInputStream obj = new ObjectInputStream(new FileInputStream(path))) {
-            Object objectByFile = obj.readObject();
-            if (objectByFile instanceof Task) {
-                person = (Person) objectByFile;
+            ArrayList<Object> objects = (ArrayList<Object>) obj.readObject();
+            for (Object object : objects) {
+                if (object instanceof Person) persons.add((Person) object);
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + e.getMessage() + " non found!");
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("The class " + e.getMessage() + " was not found");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error while reading file: " + path);
         }
-        return person;
+        return persons;
     }
 }
