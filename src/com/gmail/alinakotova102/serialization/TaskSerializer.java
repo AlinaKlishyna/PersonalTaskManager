@@ -3,6 +3,7 @@ package com.gmail.alinakotova102.serialization;
 import com.gmail.alinakotova102.model.Task;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Serializable - маркерный интерфейс
@@ -10,7 +11,7 @@ import java.io.*;
  */
 public class TaskSerializer {
 
-    public void serialize(Task task, String path) {
+    public static void serialize(ArrayList<Task> task, String path) {
         try (ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream(path))) {
             obj.writeObject(task);
         } catch (IOException e) {
@@ -18,12 +19,14 @@ public class TaskSerializer {
         }
     }
 
-    public Task deserialize(String path) {
-        Task task = new Task();
+    public static ArrayList<Task> deserialize(String path) {
+        ArrayList<Task> task = new ArrayList<>();
         try (ObjectInputStream obj = new ObjectInputStream(new FileInputStream(path))) {
-            Object objectByFile = obj.readObject();
-            if (objectByFile instanceof Task) {
-                task = (Task) objectByFile;
+            ArrayList<Object> objects = (ArrayList<Object>) obj.readObject();
+            for (Object object : objects) {
+                if (object instanceof Task) {
+                    task.add((Task) object);
+                }
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
