@@ -3,14 +3,19 @@ package com.gmail.alinakotova102.service;
 import com.gmail.alinakotova102.api.dao.impl.PersonDAOImpl;
 import com.gmail.alinakotova102.exception.DataException;
 import com.gmail.alinakotova102.model.Person;
-import com.gmail.alinakotova102.util.ScannerUtil;
 
 public class PersonService {
 
-    private PersonDAOImpl personDAO;
+    private final PersonDAOImpl personDAO = PersonDAOImpl.getInstance();
+    private static PersonService unique;
 
-    public PersonService(PersonDAOImpl personDAO) {
-        this.personDAO = personDAO;
+    private PersonService() {
+
+    }
+
+    public static PersonService getInstance() {
+        if (unique == null) unique = new PersonService();
+        return unique;
     }
 
     public Person addPerson(String firstName, String lastName, String email) throws DataException {
@@ -27,7 +32,7 @@ public class PersonService {
     }
 
     private boolean checkEmail(String email) {
-        return email.matches("[a-z0-9]+@\\w+\\.\\w+");
+        return email.matches("[a-z0-9]+@\\w+\\.\\w{2,4}");
     }
 
     private boolean checkLastName(String lastName) {
