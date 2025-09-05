@@ -1,26 +1,11 @@
 package com.gmail.alinakotova102.service;
 
-import com.gmail.alinakotova102.dao.person.PersonDAOImpl;
+import com.gmail.alinakotova102.api.dao.impl.PersonDAOImpl;
+import com.gmail.alinakotova102.exception.DataException;
 import com.gmail.alinakotova102.model.Person;
 import com.gmail.alinakotova102.util.ScannerUtil;
 
 public class PersonService {
-    /**
-     * public Person findByID(String ID);
-     * <p>
-     * public List<Person> findByName();
-     * <p>
-     * public Person findByFirstName(String firstName);
-     * <p>
-     * public List<Person> findByEmail();
-
-    /*public Person findByID(String ID) {
-        return persons.stream()
-                .filter(obj -> obj.getID().equals(ID))
-                .findAny()
-                .get();
-    }
-    */
 
     private PersonDAOImpl personDAO;
 
@@ -28,22 +13,28 @@ public class PersonService {
         this.personDAO = personDAO;
     }
 
-    public Person addPerson() {
-        String firstName = askFirstName();
-        String lastName = askLastName();
-        String email = askEmail();
+    public Person addPerson(String firstName, String lastName, String email) throws DataException {
+        if (!checkEmail(email)) {
+            throw new DataException("Email is incorrect! ", email);
+        }
+        if (!checkFirstName(firstName)) {
+            throw new DataException("First Name is incorrect! ", firstName);
+        }
+        if (!checkLastName(lastName)) {
+            throw new DataException("Last Name is incorrect! ", lastName);
+        }
         return new Person(firstName, lastName, email);
     }
 
-    private String askEmail() {
-        return ScannerUtil.response();
+    private boolean checkEmail(String email) {
+        return email.matches("[a-z0-9]+@\\w+\\.\\w+");
     }
 
-    private String askLastName() {
-        return ScannerUtil.response();
+    private boolean checkLastName(String lastName) {
+        return lastName.matches("[A-ZА-Я][a-zа-я]{2,}");
     }
 
-    private String askFirstName() {
-        return ScannerUtil.response();
+    private boolean checkFirstName(String firstName) {
+        return firstName.matches("[A-ZА-Я][a-zа-я]{1,}");
     }
 }
