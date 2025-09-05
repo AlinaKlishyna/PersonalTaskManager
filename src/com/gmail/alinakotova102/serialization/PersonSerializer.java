@@ -4,8 +4,11 @@ import com.gmail.alinakotova102.model.Person;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Serializable - маркерный интерфейс
+ * это интерфейс, который не содержит методов, но при этом помечает этот класс
+ */
 public class PersonSerializer {
     public static void serialize(ArrayList<Person> persons, String path) {
         try (ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream(path))) {
