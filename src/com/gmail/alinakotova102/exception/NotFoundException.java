@@ -1,17 +1,15 @@
 package com.gmail.alinakotova102.exception;
 
-import com.gmail.alinakotova102.util.DisplayUtil;
-
 public class NotFoundException extends Exception {
-    public NotFoundException() {
-    }
+    private final Object obj;
 
-    public NotFoundException(Object o) {
-        DisplayUtil.view("Object not found: " + o + ";");
+    public NotFoundException(Object obj) {
+        super("Object not found: ");
+        this.obj = obj;
     }
 
     @Override
     public String getMessage() {
-        return "Ops! I don't found :(";
+        return super.getMessage() + " [" + obj + "]";
     }
 }

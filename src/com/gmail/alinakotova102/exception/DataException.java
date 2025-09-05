@@ -1,7 +1,7 @@
 package com.gmail.alinakotova102.exception;
 
 public class DataException extends Exception {
-    private String data;
+    private final String data;
 
     public DataException(String message, String data) {
         super(message);
@@ -10,6 +10,6 @@ public class DataException extends Exception {
 
     @Override
     public String getMessage() {
-        return "The data is incorrect!";
+        return super.getMessage() + " [" + data + "]";
     }
 }
