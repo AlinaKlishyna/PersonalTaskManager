@@ -2,12 +2,12 @@ package com.gmail.alinakotova102.service;
 
 import com.gmail.alinakotova102.api.dao.impl.TaskDAOImpl;
 import com.gmail.alinakotova102.exception.DataException;
-import com.gmail.alinakotova102.model.Person;
-import com.gmail.alinakotova102.model.Priority;
-import com.gmail.alinakotova102.model.Status;
+import com.gmail.alinakotova102.exception.DateTaskException;
 import com.gmail.alinakotova102.model.Task;
 
 import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.List;
 
 public class TaskService {
     private final TaskDAOImpl taskDAO = TaskDAOImpl.getInstance();
@@ -23,43 +23,58 @@ public class TaskService {
         return unique;
     }
 
-    public void addTask(Task task) throws DataException {
-        if (task != null && checkTask(
-                task.getTitle(),
-                task.getDescription(),
-                task.getPriority(),
-                task.getCreationDate(),
-                task.getExecutionDate(),
-                task.getAuthor(),
-                task.getPerformer(),
-                task.getStatus()
-        ))
+    public void addTask(Task task) throws DataException, DateTaskException {
+        if (task != null) {
+            checkTask(task);
             taskDAO.insert(task);
+        }
     }
 
-    private boolean checkTask(String title, String description, Priority priority, LocalDate creationDate,
-                              LocalDate executionDate, Person author, Person performer,
-                              Status status) throws DataException {
-        return checkTitle(title)
-                && checkDescription(description)
-                && priority != null
-                && checkDate(creationDate, executionDate)
-                && author != null
-                && performer != null
-                && status != null;
+    public List<Task> viewTasks() {
+        return taskDAO.getAll().stream().sorted(Comparator.comparing(Task::getPriority)).toList();
     }
 
-    private boolean checkDate(LocalDate creationDate, LocalDate executionDate) throws DataException {
+    public void editTask(Task task) throws DataException, DateTaskException {
+        if (task == null) {
+            throw new IllegalArgumentException("Task cannot be null");
+        }
+        checkTask(task);
+        taskDAO.update(task);
+    }
+
+    private void checkTask(Task task) throws DataException, DateTaskException {
+        checkNotNull(task);
+        checkTitle(task.getTitle());
+        checkDescription(task.getDescription());
+        checkDate(task.getCreationDate(), task.getExecutionDate());
+    }
+
+    private void checkNotNull(Task task) throws DataException {
+        if (task.getTitle() == null) throw new DataException("Title cannot be null!", null);
+        if (task.getDescription() == null) throw new DataException("Description cannot be null!", null);
+        if (task.getPriority() == null) throw new DataException("Priority cannot be null!", null);
+        if (task.getAuthor() == null) throw new DataException("Author cannot be null!", null);
+        if (task.getPerformer() == null) throw new DataException("Performer cannot be null!", null);
+        if (task.getStatus() == null) throw new DataException("Status cannot be null!", null);
+        if (task.getCreationDate() == null) throw new DataException("Creation Date cannot be null!", null);
+        if (task.getExecutionDate() == null) throw new DataException("Execution Date cannot be null!", null);
+    }
+
+    private boolean checkDate(LocalDate creationDate, LocalDate executionDate) throws DateTaskException {
         if (executionDate.isBefore(creationDate))
-            throw new DataException("The end date must not be earlier than the start date.", executionDate.toString());
+            throw new DateTaskException(creationDate, executionDate);
         return true;
     }
 
-    private boolean checkTitle(String title) {
-        return title!= null && !title.matches("\\s+") && title.matches(".{1,50}");
+    private boolean checkTitle(String title) throws DataException {
+        if (title != null && !title.matches("\\s+") && title.matches(".{1,50}"))
+            return true;
+        throw new DataException("Title is incorrect!", title);
     }
 
-    private boolean checkDescription(String description) {
-        return description!= null && !description.matches("\\s+") && description.matches(".{1,100}");
+    private boolean checkDescription(String description) throws DataException {
+        if (description != null && !description.matches("\\s+") && description.matches(".{1,100}"))
+            return true;
+        throw new DataException("Description is incorrect!", description);
     }
 }

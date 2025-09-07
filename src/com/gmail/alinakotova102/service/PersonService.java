@@ -18,17 +18,17 @@ public class PersonService {
         return unique;
     }
 
-    public Person addPerson(String firstName, String lastName, String email) throws DataException {
-        if (!checkEmail(email)) {
-            throw new DataException("Email is incorrect! ", email);
+    public Person addPerson(Person person) throws DataException {
+        if (!checkEmail(person.getEmail())) {
+            throw new DataException("Email is incorrect! ", person.getEmail());
         }
-        if (!checkFirstName(firstName)) {
-            throw new DataException("First Name is incorrect! ", firstName);
+        if (!checkFirstName(person.getFirstName())) {
+            throw new DataException("First Name is incorrect! ", person.getFirstName());
         }
-        if (!checkLastName(lastName)) {
-            throw new DataException("Last Name is incorrect! ", lastName);
+        if (!checkLastName(person.getLastName())) {
+            throw new DataException("Last Name is incorrect! ", person.getLastName());
         }
-        return new Person(firstName, lastName, email);
+        return new Person(person.getFirstName(), person.getLastName(), person.getEmail());
     }
 
     private boolean checkEmail(String email) {
