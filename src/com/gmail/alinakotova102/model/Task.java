@@ -117,15 +117,15 @@ public class Task implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Task{" +
+        return "Task{" +
                 "ID='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", priority=" + priority +
+                ", priority=" + priority.getPriority() +
                 ", creationDate=" + creationDate +
                 ", executionDate=" + executionDate +
-                ", author='" + author + '\'' +
-                ", performer='" + performer + '\'' +
+                ", author='" + author.getFirstName() + " " + author.getLastName() + '\'' +
+                ", performer='"  + performer.getFirstName() + " " + performer.getLastName() + '\'' +
                 ", status=" + status +
                 '}';
     }
