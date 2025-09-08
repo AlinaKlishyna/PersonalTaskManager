@@ -4,6 +4,7 @@ import com.gmail.alinakotova102.api.dao.impl.TaskDAOImpl;
 import com.gmail.alinakotova102.exception.DataException;
 import com.gmail.alinakotova102.exception.DateTaskException;
 import com.gmail.alinakotova102.model.Priority;
+import com.gmail.alinakotova102.model.Status;
 import com.gmail.alinakotova102.model.Task;
 
 import java.time.LocalDate;
@@ -40,6 +41,14 @@ public class TaskService {
     public List<Task> filterPriority(Priority priority) throws DataException {
         if (priority == null) throw new DataException("Priority cannot be null!", null);
         return taskDAO.getAll().stream().filter(task -> task.getPriority().equals(priority)).toList();
+    }
+
+    public List<Task> filterExecutionDate() throws DataException {
+        if (taskDAO == null) throw new DataException("Execution Date cannot be null!", null);
+        return taskDAO.getAll().stream()
+                .filter(task -> task.getStatus() != Status.COMPLETED)
+                .sorted(Comparator.comparing(Task::getExecutionDate))
+                .toList();
     }
 
     public List<Task> viewTasks() {
