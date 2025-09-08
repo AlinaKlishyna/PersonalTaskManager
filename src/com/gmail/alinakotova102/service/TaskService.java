@@ -43,6 +43,11 @@ public class TaskService {
         return taskDAO.getAll().stream().filter(task -> task.getPriority().equals(priority)).toList();
     }
 
+    public List<Task> filterStatus(Status status) throws DataException {
+        if (status == null) throw new DataException("Priority cannot be null!", null);
+        return taskDAO.getAll().stream().filter(task -> task.getStatus().equals(status)).toList();
+    }
+
     public List<Task> filterExecutionDate() throws DataException {
         if (taskDAO == null) throw new DataException("Execution Date cannot be null!", null);
         return taskDAO.getAll().stream()
