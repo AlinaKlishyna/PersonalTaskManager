@@ -3,6 +3,7 @@ package com.gmail.alinakotova102.service;
 import com.gmail.alinakotova102.api.dao.impl.TaskDAOImpl;
 import com.gmail.alinakotova102.exception.DataException;
 import com.gmail.alinakotova102.exception.DateTaskException;
+import com.gmail.alinakotova102.model.Priority;
 import com.gmail.alinakotova102.model.Task;
 
 import java.time.LocalDate;
@@ -28,6 +29,17 @@ public class TaskService {
             checkTask(task);
             taskDAO.insert(task);
         }
+    }
+
+    public void editMark(Task task, Priority priority) throws DataException, DateTaskException {
+        if (task == null) throw new DataException("Task cannot be null!", null);
+        task.setPriority(priority);
+        editTask(task);
+    }
+
+    public List<Task> filterPriority(Priority priority) throws DataException {
+        if (priority == null) throw new DataException("Priority cannot be null!", null);
+        return taskDAO.getAll().stream().filter(task -> task.getPriority().equals(priority)).toList();
     }
 
     public List<Task> viewTasks() {
